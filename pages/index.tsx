@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import Head from 'next/head';
 import Image from 'next/image';
+import { GetStaticProps, GetStaticPropsContext } from 'next';
 
 interface IDataPokemon {
   pokemon: Pokemon;
@@ -39,8 +40,9 @@ export default function Home(props) {
     </>
   );
 }
-
-export async function getStaticProps() {
+export async function getStaticProps<GetStaticProps>({
+  params,
+}: GetStaticPropsContext) {
   const data = await fetch('https://pokeapi.co/api/v2/ability/7');
   const pokemons = await data.json();
 
@@ -49,8 +51,6 @@ export async function getStaticProps() {
   const urlPokemons = pokemons.pokemon.map(async (pokemon) => {
     pokemon.pokemon.url;
   });
-
-  console.log(p);
 
   // console.log(urlPokemons);
 
